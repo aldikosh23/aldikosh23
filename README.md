@@ -1,16 +1,24 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:071a14,55:0f5c43,100:2fbf8c&height=190&section=header&text=Aldik&fontSize=72&fontColor=ffffff&fontAlignY=36&desc=I%20build%20small%20things%20that%20feel%20alive&descSize=18&descAlignY=58&animation=fadeIn" width="100%" alt="Aldik"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:071a14,55:0f5c43,100:2fbf8c&height=170&section=header&text=rtut&fontSize=80&fontColor=ffffff&fontAlignY=42&animation=fadeIn" width="100%" alt="rtut"/>
 
 <a href="https://github.com/aldikosh23">
-  <img src="https://readme-typing-svg.demolab.com?font=Space+Grotesk&weight=500&size=21&duration=2800&pause=900&color=2FBF8C&center=true&vCenter=true&width=600&height=44&lines=IT+student;Native+macOS+apps+in+Swift+%2B+Metal;Simulations+that+evolve+on+their+own;Now%3A+Primordial+%E2%80%94+evolution+in+the+browser" alt="IT student · native macOS apps in Swift and Metal · simulations that evolve on their own"/>
+  <img src="https://readme-typing-svg.demolab.com?font=Space+Grotesk&weight=500&size=22&duration=2600&pause=900&color=2FBF8C&center=true&vCenter=true&width=600&height=44&lines=IT+student;AI+enthusiast;Explorer+of+new+tech" alt="IT student · AI enthusiast · explorer of new tech"/>
 </a>
 
 </div>
 
-### Hi, I'm Aldik 👋
+### Hi, I'm rtut 👋
 
-IT student. I like projects you can *see* working: a MacBook screen that bends with the lid, a music player living in the notch, creatures that evolve while you watch. I ship them, polish them and write them up properly.
+I love everything around AI and new technology: I experiment with it, use it every day and build whatever comes to mind.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/aldikosh23/aldikosh23/output/contributions-dark.svg"/>
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/aldikosh23/aldikosh23/output/contributions-light.svg"/>
+    <img alt="All-time contributions on GitHub" src="https://raw.githubusercontent.com/aldikosh23/aldikosh23/output/contributions-light.svg"/>
+  </picture>
+</p>
 
 ### Featured
 

@@ -1,0 +1,72 @@
+name: Profile stats
+
+# Twice a day: count all-time contributions, redraw the contribution-graph snake,
+# and publish both images to the `output` branch.
+on:
+  schedule:
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Runs first so dist/ belongs to the runner user (the snake step writes into it from Docker).
+      - name: Count all-time contributions
+        uses: actions/github-script@v9
+        with:
+          retries: 3
+          script: |
+            const fs = require('fs');
+            const login = context.repo.owner;
+            const { user } = await github.graphql(
+              'query($login: String!) { user(login: $login) { createdAt contributionsCollection { contributionYears } } }',
+              { login },
+            );
+            const created = new Date(user.createdAt);
+            // Commits can be dated before the account existed; GitHub counts those years too.
+            const firstYear = Math.min(created.getUTCFullYear(), ...user.contributionsCollection.contributionYears);
+            // contributionsCollection spans at most a year, so add it up year by year.
+            let total = 0;
+            for (let year = firstYear; year <= new Date().getUTCFullYear(); year++) {
+              const res = await github.graphql(
+                'query($login: String!, $from: DateTime!, $to: DateTime!) { user(login: $login) { contributionsCollection(from: $from, to: $to) { contributionCalendar { totalContributions } } } }',
+                { login, from: `${year}-01-01T00:00:00Z`, to: `${year}-12-31T23:59:59Z` },
+              );
+              total += res.user.contributionsCollection.contributionCalendar.totalContributions;
+            }
+            const since =
+              firstYear < created.getUTCFullYear()
+                ? String(firstYear)
+                : created.toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+            const count = total.toLocaleString('en-US');
+            const font = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif";
+            const card = (bg, border, accent, text) => `<svg xmlns="http://www.w3.org/2000/svg" width="480" height="120" viewBox="0 0 480 120" role="img" aria-label="${count} contributions on GitHub since ${since}">
+              <rect x="0.5" y="0.5" width="479" height="119" rx="16" fill="${bg}" stroke="${border}"/>
+              <text x="240" y="64" text-anchor="middle" font-family="${font}" font-size="44" font-weight="700" fill="${accent}">${count}</text>
+              <text x="240" y="94" text-anchor="middle" font-family="${font}" font-size="15" fill="${text}">contributions on GitHub since ${since}</text>
+            </svg>`;
+            fs.mkdirSync('dist', { recursive: true });
+            fs.writeFileSync('dist/contributions-dark.svg', card('#0d1117', '#30363d', '#5ee0b0', '#8b949e'));
+            fs.writeFileSync('dist/contributions-light.svg', card('#ffffff', '#d0d7de', '#1f9d74', '#57606a'));
+            core.info(`${count} contributions since ${since}`);
+
+      - uses: Platane/snk@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/snake-light.svg?color_snake=#1f9d74&color_dots=#ebedf0,#b4ecd3,#6fd3a8,#2fbf8c,#16805d
+            dist/snake-dark.svg?palette=github-dark&color_snake=#5ee0b0&color_dots=#161b22,#0f3b2c,#16664a,#23a173,#5ee0b0
+
+      - uses: crazy-max/ghaction-github-pages@v5
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
