@@ -46,6 +46,17 @@ I love everything around AI and new technology: I experiment with it, use it eve
   </tr>
 </table>
 
+### Contributed to
+
+<p>
+  <a href="https://github.com/krishhgg/Insomnia">
+    <img src="https://img.shields.io/badge/Insomnia-krishhgg%2FInsomnia-2fbf8c?style=flat-square&logo=apple&logoColor=white" alt="Insomnia"/>
+  </a>
+  <img src="https://img.shields.io/badge/PRs_merged-4-0f5c43?style=flat-square" alt="4 merged pull requests"/>
+</p>
+
+Contributor to <a href="https://github.com/krishhgg/Insomnia"><b>Insomnia</b></a>, a macOS API client: four merged pull requests covering macOS 27 defaults backstop handling, hotspot SSID rescanning with the other apostrophe, system-consistent Security error wording, and heat management that keeps Low Power Mode on until the battery is nominal.
+
 ### Tools I build with
 
 <p>
